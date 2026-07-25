@@ -25,39 +25,42 @@ export function InicioView() {
   ]
 
   return (
-    <div
-  className="
-    min-h-screen
-    bg-cover
-    bg-center
-    bg-fixed
-    bg-no-repeat
-    pt-20
-    relative
+      <div className="relative min-h-screen pt-20">
 
-  "
-  style={{
-    backgroundImage: "url('/images/campo-inicio.png')",
-  }}
->
-  <div
-  className="
-    absolute
-    inset-0
-    bg-black/30
-    pointer-events-none
-  "
-/>
-      {/* Hero */}
-      <section
-  className="
-    relative
-    z-10
-    overflow-hidden
-    px-6
-    py-16
-    md:py-24
-  "
+    {/* Imagen de fondo fija */}
+    <div
+      className="
+        fixed
+        inset-0
+        bg-cover
+        bg-center
+        bg-no-repeat
+        z-0
+      "
+      style={{
+        backgroundImage: "url('/images/campo-inicio.png')",
+      }}
+    />
+
+    {/* Capa oscura transparente */}
+    <div
+      className="
+        fixed
+        inset-0
+        bg-black/30
+        z-0
+      "
+    />
+            {/* Hero */}
+            <section
+        className="
+          relative
+          z-10
+          overflow-hidden
+          px-6
+          py-16
+          md:py-24
+        "
 >
         {/* <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 "></div>
@@ -90,7 +93,6 @@ export function InicioView() {
     items-center
     text-white
     font-semibold
-
     shadow-lg
     shadow-[#88A201]/30
 
@@ -110,7 +112,7 @@ export function InicioView() {
       h-[200%]
 
       rotate-45
-
+      
       bg-gradient-to-r
       from-transparent
       via-white/40

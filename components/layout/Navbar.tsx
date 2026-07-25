@@ -93,18 +93,21 @@ useEffect(() => {
     }
   `}
 >
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-      ></div>
-      <div className="absolute inset-0 bg-cover bg-center" 
-            style={{ backgroundImage: "url('/images/imagen-campo')" }}></div>
+       <div
+        className="
+          absolute
+          inset-0
+          bg-black/20
+          rounded-2xl
+        "
+      />
       <div className="relative z-10 max-w-7xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
         <button
           onClick={() => setVista('inicio')}
           className="flex items-center gap-2 shrink-0"
         >
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-primary/60 rounded-lg flex items-center justify-center">
             <Sprout className="w-4 h-4 text-primary-foreground" />
           </div>
           <span className="font-display text-lg text-white/90 hidden sm:block">
@@ -130,7 +133,7 @@ useEffect(() => {
     ${
       vista === link.id
         ? 'text-white'
-        : 'text-white/70 hover:text-white'
+        : 'text-white/90 hover:text-white'
     }
   `}
 >

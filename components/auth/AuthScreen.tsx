@@ -148,7 +148,8 @@ export function AuthScreen() {
         <div className="absolute inset-0 bg-black/50 "  />
         <div className="relative z-10 flex flex-col pt-35 pb-14 pl-17 pr-14 text-white">
           <div className="flex items-center gap-3 mb-8">
-            <div className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center">
+            <div className="w-10 h-10 bg-white/30 backdrop-blur-sm rounded-3xl p-2 flex items-center justify-center">
+            {/* <img src="images/Logo-despertar-campesino.png" alt="" className='w-full h-full object-contain' /> */}
               <Sprout className="w-6 h-6" />
             </div>
             <span className="text-white/80 text-sm font-medium tracking-wider uppercase">El Despertar del Campesino</span>
@@ -190,14 +191,27 @@ export function AuthScreen() {
             <span className="font-display text-xl text-foreground">El Despertar del Campesino</span>
           </div>
 
-          <h2 className="font-display text-3xl text-foreground mb-1">
-            {modo === 'login' ? 'Bienvenido de vuelta' : 'Crea tu cuenta'}
-          </h2>
-          <p className="text-muted-foreground text-sm mb-8">
-            {modo === 'login'
-              ? 'Ingresa a tu cuenta para continuar'
-              : 'Únete a nuestra comunidad agrícola'}
-          </p>
+
+
+          {/* Icono de la página */}
+          <div className="flex items-center gap-5 mb-8">
+
+          {/* Texto */}
+          <div>
+            <h2 className="font-display text-3xl text-foreground mb-1">
+              {modo === 'login' ? 'Bienvenido de vuelta' : 'Crea tu cuenta ahora'}
+            </h2>
+            <p className="text-muted-foreground text-sm">
+              {modo === 'login'
+                ? 'Ingresa a tu cuenta para continuar'
+                : 'Únete a nuestra comunidad agrícola'}
+            </p>
+            
+          </div>
+          <div className="w-40 h-30  rounded-2xl flex items-center justify-center shrink-0">
+              <img src="images/Logo-despertar-campesino.png" alt="" className='w-full h-full object-contain '/>
+          </div>
+        </div>
 
           {/* Tabs */}
           <div className="flex bg-muted rounded-xl p-1 mb-6">

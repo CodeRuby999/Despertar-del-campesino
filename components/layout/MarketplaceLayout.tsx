@@ -8,27 +8,65 @@ import { FincasView } from '@/components/views/FincasView'
 import { DetalleFincaView } from '@/components/views/DetalleFincaView'
 import { PedidosView } from '@/components/views/PedidosView'
 import { AdminView } from '@/components/views/AdminView'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export function MarketplaceLayout() {
   const { vista } = useApp()
 
-  const renderVista = () => {
-    switch (vista) {
-      case 'inicio': return <InicioView />
-      case 'fincas': return <FincasView />
-      case 'detalle-finca': return <DetalleFincaView />
-      case 'pedidos': return <PedidosView />
-      case 'admin': return <AdminView />
-      default: return <InicioView />
-    }
+ const renderVista = () => {
+  switch (vista) {
+    case 'inicio':
+      return <InicioView />
+
+    case 'fincas':
+      return <FincasView />
+
+    case 'detalle-finca':
+      return <DetalleFincaView />
+
+    case 'pedidos':
+      return <PedidosView />
+
+    case 'admin':
+      return <AdminView />
+
+    default:
+      return <InicioView />
   }
+}
 
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <main>
-        {renderVista()}
-      </main>
+      <div className="overflow-hidden">
+
+      <AnimatePresence mode="wait">
+
+          <motion.main
+            key={vista}
+            initial={{
+              x: 80,
+              opacity: 0
+            }}
+            animate={{
+              x: 0,
+              opacity: 1
+            }}
+            exit={{
+              x: -80,
+              opacity: 0
+            }}
+            transition={{
+              duration: 0.35,
+              ease: "easeInOut"
+            }}
+          >
+  {renderVista()}
+</motion.main>
+
+  </AnimatePresence>
+
+</div>
       <CarritoLateral />
     </div>
   )
