@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { ShoppingCart, Plus } from 'lucide-react'
+import { ShoppingCart, Plus, Images } from 'lucide-react'
 import { useApp } from '@/lib/store'
 import type { Producto } from '@/lib/types'
+import { url } from 'inspector'
 
 interface Props {
   producto: Producto
@@ -34,8 +35,11 @@ export function ProductoCard({ producto, onVerDetalle }: Props) {
   return (
     <div
       onClick={onVerDetalle}
-      className={`group bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 ${onVerDetalle ? 'cursor-pointer' : ''}`}
+      className={`group bg-orange-900/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 ${onVerDetalle ? 'cursor-pointer' : ''}`}
+
     >
+      
+        
       {/* Imagen */}
       <div className="relative aspect-square overflow-hidden bg-muted">
         <img
@@ -63,23 +67,23 @@ export function ProductoCard({ producto, onVerDetalle }: Props) {
 
       {/* Contenido */}
       <div className="p-3">
-        <p className="text-[10px] text-muted-foreground mb-0.5 truncate">{producto.fincaNombre}</p>
-        <h3 className="font-semibold text-sm text-foreground leading-snug line-clamp-2 mb-2">
+        <p className="text-[15px] text-green-300/70 mb-0.5 truncate tracking-wider">{producto.fincaNombre}</p>
+        <h3 className="font-thin text-lg text-white leading-snug line-clamp-2 mb-2 tracking-wider">
           {producto.nombre}
         </h3>
         <div className="flex items-center justify-between">
           <div>
-            <span className="font-display text-base text-primary">
+            <span className="font-display text-yellow-400 text-green-500 tracking-wider">
               ${producto.precio.toLocaleString('es-CO')}
             </span>
-            <span className="text-muted-foreground text-xs"> / {producto.unidad}</span>
+            <span className="text-white text-xs"> / {producto.unidad}</span>
           </div>
           <button
             onClick={handleAgregar}
             className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 ${
               agregando
                 ? 'bg-primary text-primary-foreground scale-95'
-                : 'bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground'
+                : 'bg-yellow-500/40 text-white hover:bg-primary hover:text-primary-foreground'
             }`}
             aria-label="Agregar al carrito"
           >

@@ -37,6 +37,14 @@ export function MarketplaceLayout() {
 
   return (
     <div className="min-h-screen bg-background">
+      <div className="fixed inset-0 z-0">
+        <img
+          src="/images/campo-inicio.png"
+          alt=""
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
       <Navbar />
       <div className="overflow-hidden">
 

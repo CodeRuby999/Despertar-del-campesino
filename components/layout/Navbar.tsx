@@ -82,13 +82,14 @@ useEffect(() => {
           bg-gradient-to-br from-black/30 via-white/10 to-black/30
           backdrop-blur-xl
           border-gray-200
-          shadow-xl
+          shadow-3xl
           
         `
         : `
-         bg-black/30 via-white/10 to-black/30
+         bg-black/20
           border-gray-200
           shadow-xl
+          
         `
     }
   `}

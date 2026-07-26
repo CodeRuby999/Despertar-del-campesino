@@ -40,8 +40,8 @@ export function FincasView() {
   className="
     absolute
     inset-0
-    bg-black/50
     pointer-events-none
+    bg-black/30
   "
 />
       {/* Header */}

@@ -5,6 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --color-brown: var(--brown);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -60,7 +61,7 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.22 0.03 60);
   --primary: oklch(0.48 0.14 142);    /* Verde bosque principal */
-  --brown: oklch(0.1854 0.0202 66.14);     
+  --brown: oklch(50.181% 0.07135 64.94);     
   --primary-foreground: oklch(0.98 0.008 95);
   --secondary: oklch(0.94 0.02 80);           /* Beige claro */
   --secondary-foreground: oklch(0.22 0.03 60);
