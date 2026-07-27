@@ -42,7 +42,7 @@ export function PedidosView() {
   const misPedidos = pedidos.filter(p => p.usuarioUid === usuario?.uid)
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 pt-24 pb-8">
       <h1 className="font-display text-3xl text-foreground mb-1">Mis pedidos</h1>
       <p className="text-muted-foreground text-sm mb-6">Historial completo de tus compras</p>
 

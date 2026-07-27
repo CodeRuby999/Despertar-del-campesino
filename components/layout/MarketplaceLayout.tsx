@@ -43,7 +43,7 @@ export function MarketplaceLayout() {
           alt=""
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-black/20" />
       </div>
       <Navbar />
       <div className="overflow-hidden">
@@ -52,6 +52,7 @@ export function MarketplaceLayout() {
 
           <motion.main
             key={vista}
+            className="relative z-10"
             initial={{
               x: 80,
               opacity: 0

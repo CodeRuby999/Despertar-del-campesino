@@ -15,10 +15,10 @@ export function FincaCard({ finca }: Props) {
   return (
     <div
       onClick={() => setVista('detalle-finca', finca.id)}
-      className="group bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+      className="group bg-black/70 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
     >
       {/* Imagen */}
-      <div className="relative h-48 overflow-hidden bg-muted">
+      <div className="relative h-48 overflow-hidden">
         <img
           src={finca.imagenURL}
           alt={finca.nombre}
@@ -39,18 +39,18 @@ export function FincaCard({ finca }: Props) {
       <div className="p-4">
         <div className="flex items-center gap-1 text-muted-foreground text-xs mb-2">
           <MapPin className="w-3.5 h-3.5 shrink-0" />
-          <span className="truncate">{finca.ubicacion}</span>
+          <span className="truncate text-white">{finca.ubicacion}</span>
         </div>
         <div className="flex items-center gap-1 text-muted-foreground text-xs mb-3">
           <Leaf className="w-3.5 h-3.5 shrink-0 text-primary" />
-          <span className="truncate text-foreground">{finca.tipoCultivo}</span>
+          <span className="truncate text-white">{finca.tipoCultivo}</span>
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             <Star className="w-3.5 h-3.5 fill-harvest text-harvest" />
-            <span className="text-sm font-semibold text-foreground">{finca.rating}</span>
+            <span className="text-sm font-semibold text-white">{finca.rating}</span>
           </div>
-          <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
+          <span className="text-xs text-white bg-yellow-500/40 px-2 py-0.5 rounded-full">
             {numProductos} productos
           </span>
         </div>

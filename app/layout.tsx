@@ -46,12 +46,15 @@ export default function RootLayout({
       <body className="antialiased font-sans">
         {children}
         <Toaster
-          richColors
-          position="top-right"
+          position="top-left"
           toastOptions={{
-            style: { fontFamily: 'var(--font-sans)' },
-          }}
-        />
+            classNames: {
+              toast: "!bg-green-600/30 !backdrop-blur-md !border-transparent ",
+              title: "!text-white",
+              description: "!text-white/70",
+        },
+      }}
+    />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

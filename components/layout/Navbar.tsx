@@ -5,6 +5,7 @@ import { ShoppingCart, Bell, User, Sprout, LogOut, Settings, ChevronDown, Menu, 
 import { useApp } from '@/lib/store'
 import { isFirebaseConfigured } from '@/lib/firebase'
 import { toast } from 'sonner'
+import { createPortal } from "react-dom"
 
 export function Navbar() {
   const {
@@ -18,17 +19,17 @@ export function Navbar() {
   const [menuMobile, setMenuMobile] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-useEffect(() => {
-  const handleScroll = () => {
-    setScrolled(window.scrollY > 50)
-  }
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
 
-  window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll)
 
-  return () => {
-    window.removeEventListener('scroll', handleScroll)
-  }
-}, [])
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   const totalItems = carrito.reduce((s, i) => s + i.cantidad, 0)
   const noLeidas = notificaciones.filter(n => !n.leida).length
@@ -56,7 +57,7 @@ useEffect(() => {
 
   return (
     <header
-  className={`
+      className={`
     fixed
     top-4
     left-1/2
@@ -67,37 +68,37 @@ useEffect(() => {
 
     rounded-2xl
 
-    
+    isolate
 
     shadow-lg
 
-    z-50
+    z-[100]
 
     transition-all
     duration-300
 
-    ${
-      scrolled
-        ? `
+    ${scrolled
+          ? `
           bg-gradient-to-br from-black/30 via-white/10 to-black/30
           backdrop-blur-xl
           border-gray-200
           shadow-3xl
           
         `
-        : `
+          : `
          bg-black/20
           border-gray-200
           shadow-xl
           
         `
-    }
+        }
   `}
->
-       <div
+    >
+      <div
         className="
           absolute
           inset-0
+          -z-10
           bg-black/20
           rounded-2xl
         "
@@ -120,9 +121,9 @@ useEffect(() => {
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map(link => (
             <button
-  key={link.id}
-  onClick={() => setVista(link.id)}
-  className={`
+              key={link.id}
+              onClick={() => setVista(link.id)}
+              className={`
     relative
     px-4
     py-2
@@ -131,18 +132,17 @@ useEffect(() => {
     transition-colors
     duration-300
 
-    ${
-      vista === link.id
-        ? 'text-white'
-        : 'text-white/90 hover:text-white'
-    }
+    ${vista === link.id
+                  ? 'text-white'
+                  : 'text-white/90 hover:text-white'
+                }
   `}
->
-  {link.label}
+            >
+              {link.label}
 
-  {vista === link.id && (
-    <span
-className="
+              {vista === link.id && (
+                <span
+                  className="
 absolute
 left-1/2
 -translate-x-1/2
@@ -158,19 +158,72 @@ rounded-full
 transition-all
 duration-800
 "
-/>
-  )}
-</button>
+                />
+              )}
+            </button>
           ))}
           {usuario?.rol === 'admin' && (
             <button
               onClick={() => setVista('admin')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-150 ${vista === 'admin'
-                  ? 'bg-primary/10 text-primary'
-                  : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                }`}
+              className={`
+      relative
+      px-4
+      py-2
+      text-sm
+      font-medium
+      transition-colors
+      duration-300
+
+      ${vista === 'admin'
+                  ? `
+            bg-gradient-to-r
+            from-yellow-500
+            via-yellow-200
+            to-yellow-500
+
+            bg-clip-text
+            text-transparent
+
+            bg-[length:200%_auto]
+
+            animate-shine-text
+          `
+                  : `
+            bg-gradient-to-r
+            from-yellow-500
+            via-yellow-200
+            to-yellow-500
+
+            bg-clip-text
+            text-transparent
+
+            bg-[length:200%_auto]
+
+            animate-shine-text
+          `
+                }
+    `}
             >
               Administrador
+
+              {vista === 'admin' && (
+                <span
+                  className="
+          absolute
+          left-1/2
+          -translate-x-1/2
+          bottom-0
+
+          w-8
+          h-1
+
+          bg-white 
+          rounded-full
+          transition-all
+duration-300
+        "
+                />
+              )}
             </button>
           )}
         </nav>
@@ -195,18 +248,18 @@ duration-800
               )}
             </button>
             {menuNotif && (
-              <div className="absolute right-0 top-11 w-80 bg-popover rounded-2xl shadow-xl border border-border p-2 z-50 animate-fade-in-up">
+              <div className="absolute right-0 top-11 w-80 bg-black/60 backdrop-blur-sm rounded-2xl shadow-xl p-2 z-50 animate-fade-in-up">
                 <div className="px-3 py-2 border-b border-border mb-1">
-                  <p className="font-semibold text-sm text-foreground">Notificaciones</p>
+                  <p className="font-semibold text-sm text-yellow-500">Notificaciones</p>
                 </div>
                 {notificaciones.length === 0 ? (
-                  <div className="py-8 text-center text-muted-foreground text-sm">Sin notificaciones</div>
+                  <div className="py-8 text-center text-muted-white text-sm">Sin notificaciones</div>
                 ) : (
                   <div className="max-h-72 overflow-y-auto space-y-0.5">
                     {notificaciones.map(n => (
-                      <div key={n.id} className="px-3 py-2.5 rounded-xl hover:bg-muted transition-colors">
-                        <p className="text-sm font-medium text-foreground">{n.titulo}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5">{n.mensaje}</p>
+                      <div key={n.id} className="px-3 py-2.5 rounded-xl hover:bg-white/30 transition-colors">
+                        <p className="text-sm font-medium text-white  ">{n.titulo}</p>
+                        <p className="text-xs text-white/70 mt-0.5">{n.mensaje}</p>
                       </div>
                     ))}
                   </div>
@@ -233,7 +286,7 @@ duration-800
           <div className="relative">
             <button
               onClick={() => setMenuUsuario(!menuUsuario)}
-              className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-muted transition-colors ml-1"
+              className="flex items-center gap-2 px-2 py-1.5 rounded-xl hover:bg-black/30 transition-colors ml-1"
             >
               {usuario?.photoURL ? (
                 <img src={usuario.photoURL} alt="" className="w-7 h-7 rounded-full object-cover" />
@@ -243,7 +296,7 @@ duration-800
                 </div>
               )}
               <span
-  className="
+                className="
     hidden
     sm:block
 
@@ -268,39 +321,62 @@ duration-800
     max-w-24
     truncate
   "
->
-  {usuario?.nombre?.split(' ')[0]}
-</span>
-              <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
+              >
+                {usuario?.nombre?.split(' ')[0]}
+              </span>
+              <ChevronDown className="w-3.5 h-3.5 text-white mt-1" />
             </button>
 
-            {menuUsuario && (
-              <div className="absolute right-0 top-11 w-52 bg-popover rounded-2xl shadow-xl border border-border p-2 z-50 animate-fade-in-up">
-                <div className="px-3 py-2 border-b border-border mb-1">
-                  <p className="font-semibold text-sm text-foreground truncate">{usuario?.nombre}</p>
-                  <p className="text-xs text-muted-foreground truncate">{usuario?.email}</p>
-                  <span className="inline-block mt-1 px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-medium rounded-full capitalize">
-                    {usuario?.rol}
-                  </span>
-                </div>
-                {usuario?.rol === 'admin' && (
-                  <button
-                    onClick={() => { setVista('admin'); setMenuUsuario(false) }}
-                    className="w-full flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-muted text-sm text-foreground"
-                  >
-                    <Settings className="w-4 h-4 text-muted-foreground" />
-                    Panel de admin
-                  </button>
-                )}
-                <button
-                  onClick={handleLogout}
-                  className="w-full flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-muted text-sm text-destructive"
+            {menuUsuario && typeof window !== "undefined" &&
+              createPortal(
+                <div
+                  className="
+        fixed
+        right-8
+        top-20
+
+        w-52
+
+        bg-black/40
+        backdrop-blur-sm
+        backdrop-saturate-150
+
+        rounded-2xl
+        shadow-xl
+        p-2
+
+        z-[9999]
+
+        animate-fade-in-up
+      "
                 >
-                  <LogOut className="w-4 h-4" />
-                  Cerrar sesión
-                </button>
-              </div>
-            )}
+                  <div className="px-3 py-2 border-b border-border mb-1">
+                    <p className="font-semibold text-sm text-white truncate">{usuario?.nombre}</p>
+                    <p className="text-xs text-white/80 truncate">{usuario?.email}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-green-800/80 text-yellow-300 text-[10px] font-medium rounded-full capitalize">
+                      {usuario?.rol}
+                    </span>
+                  </div>
+                  {usuario?.rol === 'admin' && (
+                    <button
+                      onClick={() => { setVista('admin'); setMenuUsuario(false) }}
+                      className="w-full flex text-white bg-black/30  items-center gap-2 px-3 py-2 rounded-xl hover:bg-blue-600/30 text-sm text-foreground"
+                    >
+                      <Settings className="w-4 h-4 text-white " />
+                      Panel de admin
+                    </button>
+                  )}
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex mt-2 bg-red-600/40 hover:bg-black/70 text-white items-center gap-2 px-3 py-2 rounded-xl hover:bg-muted hover:text-red-600 text-sm text-destructive"
+                  >
+                    <LogOut className="w-4 h-4 hover:text-red-600" />
+                    Cerrar sesión
+                  </button>
+                </div>,
+                document.body
+              )
+            }
           </div>
 
           {/* Hamburguesa mobile */}
@@ -340,8 +416,15 @@ duration-800
       {/* Overlay para cerrar menús */}
       {(menuUsuario || menuNotif) && (
         <div
-          className="fixed inset-0 z-40"
-          onClick={() => { setMenuUsuario(false); setMenuNotif(false) }}
+          className="
+   fixed
+   inset-0
+   z-[999]
+ "
+          onClick={() => {
+            setMenuUsuario(false)
+            setMenuNotif(false)
+          }}
         />
       )}
     </header>

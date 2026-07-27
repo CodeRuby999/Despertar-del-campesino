@@ -69,7 +69,7 @@ export function AdminView() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-6">
+    <div className="max-w-7xl mx-auto px-4 pt-24 pb-6">
       <div className="mb-5">
         <h1 className="font-display text-3xl text-foreground">Panel de Administrador</h1>
         <p className="text-muted-foreground text-sm">Gestión completa de la plataforma</p>

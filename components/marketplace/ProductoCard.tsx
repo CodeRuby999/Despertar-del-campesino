@@ -35,7 +35,7 @@ export function ProductoCard({ producto, onVerDetalle }: Props) {
   return (
     <div
       onClick={onVerDetalle}
-      className={`group bg-orange-900/20 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 ${onVerDetalle ? 'cursor-pointer' : ''}`}
+      className={`group bg-gradient-to-br from-black/60 via-black/80 to-green-500/10  rounded-2xl overflow-hidden shadow-lg hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 ${onVerDetalle ? 'cursor-pointer' : ''}`}
 
     >
       
@@ -52,7 +52,7 @@ export function ProductoCard({ producto, onVerDetalle }: Props) {
           }}
         />
         <div className="absolute top-2 left-2">
-          <span className="bg-white/90 backdrop-blur-sm text-foreground text-[10px] font-medium px-2 py-0.5 rounded-full border border-border">
+          <span className="bg-yellow-600 backdrop-blur-sm text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
             {producto.categoria}
           </span>
         </div>
@@ -67,8 +67,8 @@ export function ProductoCard({ producto, onVerDetalle }: Props) {
 
       {/* Contenido */}
       <div className="p-3">
-        <p className="text-[15px] text-green-300/70 mb-0.5 truncate tracking-wider">{producto.fincaNombre}</p>
-        <h3 className="font-thin text-lg text-white leading-snug line-clamp-2 mb-2 tracking-wider">
+        <p className="text-[15px] text-green-500/80 mb-0.5 truncate">{producto.fincaNombre}</p>
+        <h3 className="font-thin text-lg text-white leading-snug line-clamp-2 mb-2">
           {producto.nombre}
         </h3>
         <div className="flex items-center justify-between">
@@ -78,17 +78,50 @@ export function ProductoCard({ producto, onVerDetalle }: Props) {
             </span>
             <span className="text-white text-xs"> / {producto.unidad}</span>
           </div>
-          <button
-            onClick={handleAgregar}
-            className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all duration-200 ${
-              agregando
-                ? 'bg-primary text-primary-foreground scale-95'
-                : 'bg-yellow-500/40 text-white hover:bg-primary hover:text-primary-foreground'
-            }`}
-            aria-label="Agregar al carrito"
-          >
-            {agregando ? <ShoppingCart className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
-          </button>
+        <button
+  onClick={handleAgregar}
+  className={`
+    w-8
+    h-8
+    rounded-xl
+    flex
+    items-center
+    justify-center
+    transition-all
+    duration-300
+    
+    ${
+      agregando
+        ? `
+          bg-primary
+          text-primary-foreground
+          scale-95
+        `
+        : `
+          bg-gradient-to-r
+          from-green-800/60
+          via-yellow-600/70
+          to-green-800/60
+
+          bg-[length:200%_auto]
+
+       
+
+          text-white
+
+          hover:scale-110
+          shadow-lg
+          shadow-green-700/30
+        `
+    }
+  `}
+  aria-label="Agregar al carrito"
+>
+  {agregando 
+    ? <ShoppingCart className="w-3.5 h-3.5" /> 
+    : <Plus className="w-3.5 h-3.5" />
+  }
+</button>
         </div>
       </div>
     </div>

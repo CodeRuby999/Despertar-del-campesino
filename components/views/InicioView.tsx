@@ -7,7 +7,6 @@ import { CATEGORIAS } from '@/lib/seed-data'
 import { ProductoCard } from '@/components/marketplace/ProductoCard'
 import { FincaCard } from '@/components/marketplace/FincaCard'
 import Typewriter from '@/components/ui/Typewriter'
-import { motion } from "framer-motion"
 
 export function InicioView() {
   const { fincas, productos, pedidos, setVista } = useApp()
@@ -147,7 +146,7 @@ export function InicioView() {
       <section className="max-w-7xl mx-auto px-4 mt-6 relative z-10">
         <div className="mb-4 mt-30">
     <h2 className="font-display text-2xl text-white">
-      Estadísticas
+      Nuestras Cifras
     </h2>
     <p className="text-white/70 text-sm mb-8">
       Datos destacados de nuestra comunidad agrícola
@@ -219,10 +218,10 @@ export function InicioView() {
             <button 
               key={cat.id}
               onClick={() => setCategoriaActiva(cat.id)}
-              className={`shrink-0 flex items-center gap-2 px-6 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+              className={`shrink-0 flex items-center gap-2 px-6 py-2 font-semibold rounded-xl text-sm font-medium transition-all duration-200 ${
                 categoriaActiva === cat.id
-                  ? 'bg-primary text-white border-primary shadow-sm '
-                  : 'bg-white/20 backdrop-blur-sm text-white border-border hover:border-primary/40 hover:bg-white/80 hover:text-black'
+                  ? 'bg-green-800/80 text-white  shadow-lg '
+                  : 'bg-black/40 backdrop-blur-sm text-white  hover:border-primary/40 hover:bg-white/80 hover:text-black'
               }`}
             >
               <span>{cat.icono}</span>
@@ -278,15 +277,55 @@ export function InicioView() {
       </section>
 
       {/* Banner CTA */}
-      <section className="bg-muted py-14 px-6 relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="font-display text-3xl text-foreground mb-3">
-            ¿Eres campesino? Vende tu cosecha aquí
+      <section className="bg-black/60 py-14 px-6 relative z-10 ">
+        <div className="max-w-3xl mx-auto text-center justify-center">
+          <h2 className="font-display text-3xl text-yellow-500/90 mb-3">
+            ¿Eres campesino? 
           </h2>
-          <p className="text-muted-foreground mb-6 leading-relaxed">
+          <p className="text-white/80 mb-6 leading-relaxed">
             Regístrate como productor y conecta directamente con miles de compradores que valoran tu trabajo.
           </p>
-          <button className="inline-flex items-center gap-2 bg-primary text-primary-foreground font-semibold px-6 py-3 rounded-xl hover:bg-primary/90 transition-all duration-200 shadow-sm">
+          <button  className="
+                      mx-auto
+                      relative
+                      overflow-hidden
+                      rounded-xl
+                      px-6
+                      py-3
+                      bg-green-800/80
+                      flex
+                      items-center
+                      text-white
+                      font-semibold
+                      shadow-lg
+                      
+                      transition-transform
+                      hover:scale-105
+                    "
+        >
+  <span
+    className="
+      absolute
+
+      top-0
+      left-[-100%]
+
+      w-12
+      h-[200%]
+
+      rotate-45
+      
+      bg-gradient-to-r
+      from-transparent
+      via-white/40
+      to-transparent
+
+      animate-shine-diagonal
+
+      pointer-events-none
+    "
+  />
+
             <Star className="w-4 h-4" />
             Únete como campesino
           </button>
