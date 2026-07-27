@@ -6,6 +6,14 @@ import { AppContext, type AppState, type AppContextType } from '@/lib/store'
 import type { Usuario, Finca, Producto, Pedido, CartItem, Notificacion } from '@/lib/types'
 import { SEED_FINCAS, SEED_PRODUCTOS } from '@/lib/seed-data'
 import { isFirebaseConfigured } from '@/lib/firebase'
+import {
+  crearFinca as fbCrearFinca,
+  actualizarFinca as fbActualizarFinca,
+  eliminarFinca as fbEliminarFinca,
+  crearProducto as fbCrearProducto,
+  actualizarProducto as fbActualizarProducto,
+  eliminarProducto as fbEliminarProducto,
+} from '@/lib/firebase-actions'
 
 // ─── Estado inicial ────────────────────────────────────────────────
 
@@ -358,6 +366,85 @@ export function AppProvider({ children }: { children: ReactNode }) {
       }),
     marcarNotificacionesLeidas: () => dispatch({ type: 'MARCAR_NOTIFICACIONES_LEIDAS' }),
     setVista: (vista, fincaId)    => dispatch({ type: 'SET_VISTA', payload: { vista, fincaId } }),
+
+    // ── CRUD Fincas ──────────────────────────────────────────────────
+    crearFinca: async (data) => {
+      let nueva: import('@/lib/types').Finca
+      if (isFirebaseConfigured()) {
+        nueva = await fbCrearFinca(data)
+      } else {
+        nueva = { id: crypto.randomUUID(), ...data }
+      }
+      dispatch({ type: 'SET_FINCAS', payload: [...state.fincas, nueva] })
+      return nueva
+    },
+
+    actualizarFinca: async (id, cambios) => {
+      if (isFirebaseConfigured()) {
+        await fbActualizarFinca(id, cambios)
+      }
+      dispatch({
+        type: 'SET_FINCAS',
+        payload: state.fincas.map(f => f.id === id ? { ...f, ...cambios } : f),
+      })
+      // Actualizar también fincaNombre en productos relacionados si cambió el nombre
+      if (cambios.nombre) {
+        dispatch({
+          type: 'SET_PRODUCTOS',
+          payload: state.productos.map(p =>
+            p.fincaId === id ? { ...p, fincaNombre: cambios.nombre! } : p
+          ),
+        })
+      }
+    },
+
+    eliminarFinca: async (id) => {
+      if (isFirebaseConfigured()) {
+        const { productosEliminados } = await fbEliminarFinca(id)
+        console.info(`[AppProvider] Finca eliminada con ${productosEliminados} productos en cascada.`)
+      }
+      // Eliminación en cascada en el estado local
+      dispatch({
+        type: 'SET_PRODUCTOS',
+        payload: state.productos.filter(p => p.fincaId !== id),
+      })
+      dispatch({
+        type: 'SET_FINCAS',
+        payload: state.fincas.filter(f => f.id !== id),
+      })
+    },
+
+    // ── CRUD Productos ───────────────────────────────────────────────
+    crearProducto: async (data) => {
+      let nuevo: import('@/lib/types').Producto
+      if (isFirebaseConfigured()) {
+        nuevo = await fbCrearProducto(data)
+      } else {
+        nuevo = { id: crypto.randomUUID(), ...data }
+      }
+      dispatch({ type: 'SET_PRODUCTOS', payload: [...state.productos, nuevo] })
+      return nuevo
+    },
+
+    actualizarProducto: async (id, cambios) => {
+      if (isFirebaseConfigured()) {
+        await fbActualizarProducto(id, cambios)
+      }
+      dispatch({
+        type: 'SET_PRODUCTOS',
+        payload: state.productos.map(p => p.id === id ? { ...p, ...cambios } : p),
+      })
+    },
+
+    eliminarProducto: async (id) => {
+      if (isFirebaseConfigured()) {
+        await fbEliminarProducto(id)
+      }
+      dispatch({
+        type: 'SET_PRODUCTOS',
+        payload: state.productos.filter(p => p.id !== id),
+      })
+    },
   }
 
   return <AppContext.Provider value={ctx}>{children}</AppContext.Provider>

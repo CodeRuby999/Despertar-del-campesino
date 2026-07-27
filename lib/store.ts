@@ -44,6 +44,14 @@ export interface AppActions {
   agregarNotificacion: (n: Omit<Notificacion, 'id' | 'fecha' | 'leida'>) => void
   marcarNotificacionesLeidas: () => void
   setVista: (v: AppState['vista'], fincaId?: string) => void
+  // CRUD Fincas
+  crearFinca: (data: Omit<Finca, 'id'>) => Promise<Finca>
+  actualizarFinca: (id: string, cambios: Partial<Omit<Finca, 'id'>>) => Promise<void>
+  eliminarFinca: (id: string) => Promise<void>
+  // CRUD Productos
+  crearProducto: (data: Omit<Producto, 'id'>) => Promise<Producto>
+  actualizarProducto: (id: string, cambios: Partial<Omit<Producto, 'id'>>) => Promise<void>
+  eliminarProducto: (id: string) => Promise<void>
 }
 
 export type AppContextType = AppState & AppActions
