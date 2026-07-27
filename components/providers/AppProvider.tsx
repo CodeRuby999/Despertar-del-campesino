@@ -92,6 +92,7 @@ function reducer(state: AppState, action: Action): AppState {
 
 /**
  * Lee las colecciones `fincas` y `productos` de Firestore.
+ * Enriquece cada producto con `fincaNombre` desde la finca correspondiente.
  * Retorna los datos tipados, o `null` si ambas colecciones están vacías.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,8 +106,24 @@ async function obtenerDatosFirebase(db: any): Promise<{ fincas: Finca[]; product
 
   if (fincasSnap.empty && productosSnap.empty) return null
 
-  const fincas: Finca[]     = fincasSnap.docs.map(d => ({ id: d.id, ...d.data() } as Finca))
-  const productos: Producto[] = productosSnap.docs.map(d => ({ id: d.id, ...d.data() } as Producto))
+  const fincas: Finca[] = fincasSnap.docs.map(d => ({ id: d.id, ...d.data() } as Finca))
+
+  // Mapa id → nombre para enriquecer productos con fincaNombre real
+  const mapaFincaNombres = new Map<string, string>(fincas.map(f => [f.id, f.nombre]))
+
+  const productos: Producto[] = productosSnap.docs.map(d => {
+    const data = d.data() as Omit<Producto, 'id'>
+    return {
+      id: d.id,
+      ...data,
+      // Asegurar fincaNombre desde Firestore, con fallback al valor guardado
+      fincaNombre: mapaFincaNombres.get(data.fincaId) ?? data.fincaNombre ?? '',
+    } as Producto
+  })
+
+  console.info(
+    `[AppProvider] Datos cargados desde Firestore: ${fincas.length} fincas, ${productos.length} productos.`
+  )
 
   return { fincas, productos }
 }
@@ -138,17 +155,21 @@ async function crearDatosInicialesFirebase(db: any): Promise<{ fincas: Finca[]; 
     }
   }
 
-  // ── 2. Crear productos con el fincaId real ──────────────────────
+  // ── 2. Crear productos con el fincaId real y fincaNombre correcto ─
   const productosCreados: Producto[] = []
 
   for (let i = 0; i < SEED_PRODUCTOS.length; i++) {
     const semilla = SEED_PRODUCTOS[i]
     // Resolver clave temporal ('finca-1') al ID real generado por Firestore
     const fincaIdReal = mapaFincaIds.get(semilla.fincaId) ?? semilla.fincaId
+    // Usar el nombre real de la finca creada (no el hardcodeado del seed)
+    const fincaReal   = fincasCreadas.find(f => f.id === fincaIdReal)
+    const fincaNombre = fincaReal?.nombre ?? semilla.fincaNombre ?? ''
 
     const productoParaFirestore: Omit<Producto, 'id'> = {
       ...semilla,
       fincaId: fincaIdReal,
+      fincaNombre,
     }
 
     try {
@@ -159,6 +180,9 @@ async function crearDatosInicialesFirebase(db: any): Promise<{ fincas: Finca[]; 
     }
   }
 
+  console.info(
+    `[AppProvider] Seed inicial creado: ${fincasCreadas.length} fincas, ${productosCreados.length} productos.`
+  )
   return { fincas: fincasCreadas, productos: productosCreados }
 }
 
