@@ -38,7 +38,7 @@ export function FincasView() {
     absolute
     inset-0
     pointer-events-none
-    bg-black/30
+    bg-black/20
   "
 />
       {/* Header */}

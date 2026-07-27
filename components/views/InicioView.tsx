@@ -145,7 +145,7 @@ export function InicioView() {
       {/* Estadísticas */}
       <section className="max-w-7xl mx-auto px-4 mt-6 relative z-10">
         <div className="mb-4 mt-30">
-    <h2 className="font-display text-2xl text-white">
+    <h2 className="font-display text-2xl text-white ">
       Nuestras Cifras
     </h2>
     <p className="text-white/70 text-sm mb-8">
@@ -263,7 +263,7 @@ export function InicioView() {
           <h2 className="font-display text-2xl text-white">Fincas destacadas</h2>
           <button
             onClick={() => setVista('fincas')}
-            className="text-sm text-primary font-medium flex items-center gap-1 hover:underline"
+            className="text-sm text-white font-medium flex items-center gap-1 hover:underline"
           >
             Ver todas
             <ArrowRight className="w-3.5 h-3.5" />

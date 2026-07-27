@@ -99,29 +99,29 @@ export function CarritoLateral() {
   return (
     <>
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" />
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40" />
 
       {/* Panel lateral */}
       <div
         ref={panelRef}
-        className="fixed right-0 top-0 h-full w-full max-w-sm bg-black/40  shadow-2xl z-[200] flex flex-col animate-slide-in-right"
+        className="fixed right-0 top-0 h-full w-full max-w-sm bg-gradient-to-br from-black/50 via-black/20 to-yellow-600/20  shadow-2xl z-[200] flex flex-col animate-slide-in-right"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border bg-black/50">
           <div className="flex items-center gap-2">
             <ShoppingCart className="w-5 h-5 text-white" />
-            <h2 className="font-display text-xl text-white">Mi carrito</h2>
+            <h2 className="font-display text-xl text-yellow-400">Mi carrito</h2>
             {carrito.length > 0 && (
-              <span className="bg-yellow-500/50 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+              <span className="bg-green-500/50 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                 {carrito.reduce((s, i) => s + i.cantidad, 0)}
               </span>
             )}
           </div>
           <button
             onClick={() => setCarritoAbierto(false)}
-            className="w-8 h-8 rounded-full bg-muted flex items-center justify-center hover:bg-border transition-colors"
+            className="w-8 h-8 rounded-full bg-green-500/50 flex items-center justify-center hover:bg-border transition-colors"
           >
-            <X className="w-4 h-4 text-muted-foreground" />
+            <X className="w-4 h-4 text-white" />
           </button>
         </div>
 
@@ -139,7 +139,7 @@ export function CarritoLateral() {
             </div>
           ) : (
             carrito.map(item => (
-              <div key={item.productoId} className="flex gap-3 bg-gradient-to-br from-black/40 via-black/50 to-black/10  rounded-2xl p-3">
+              <div key={item.productoId} className="flex gap-3 bg-gradient-to-r from-green-500/20 via-yellow-500/20 to-black/70 rounded-2xl p-3">
                 <img
                   src={item.imagenURL}
                   alt={item.nombre}
@@ -148,7 +148,7 @@ export function CarritoLateral() {
                 />
                 <div className="flex-1 min-w-0">
                   <h3 className="text-md  text-white tracking-wider leading-snug truncate">{item.nombre}</h3>
-                  <p className="text-xs text-white">{item.unidad}</p>
+                  <p className="text-xs text-white/80">{item.unidad}</p>
                   <div className="flex items-center justify-between mt-2">
                     <div className="flex items-center gap-1.5 bg-black/20 rounded-lg p-0.5">
                       <button
@@ -201,7 +201,7 @@ export function CarritoLateral() {
 
             <button
               onClick={handleCheckout}
-              className="w-full flex items-center justify-center gap-2 bg-green-600/80 text-white font-semibold py-3.5 rounded-xl hover:bg-[#20b858] transition-all duration-200 shadow-sm"
+              className="w-full flex items-center justify-center gap-2 bg-green-500/50 text-white font-semibold py-3.5 rounded-xl hover:bg-[#20b858] transition-all duration-200 shadow-sm"
             >
               <MessageCircle className="w-4 h-4" />
               Pedir por WhatsApp
